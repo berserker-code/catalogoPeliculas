@@ -1,4 +1,5 @@
 import 'package:catalogopeliculas/models/movie.dart';
+import 'package:catalogopeliculas/screens/movie_detail_screen.dart';
 import 'package:catalogopeliculas/services/movie_service.dart';
 import 'package:flutter/material.dart';
 
@@ -31,10 +32,25 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: movies.length,
         itemBuilder: (context, index) {
           final movie = movies[index];
-          return ListTile(
-            leading: Image.network('https://image.tmdb.org/t/p/w200${movie.posterPath}'),
-            title: Text(movie.title),
-            subtitle: Text(movie.voteAverage.toString()),
+          return Padding(
+            padding: EdgeInsets.all(5),
+            child: Card(
+              child: ListTile(
+                leading: Image.network(
+                  'https://image.tmdb.org/t/p/w200${movie.posterPath}',
+                ),
+                title: Text(movie.title),
+                subtitle: Text(movie.voteAverage.toString()),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovieDetailScreen(movie: movie),
+                    ),
+                  );
+                },
+              ),
+            ),
           );
         },
       ),
