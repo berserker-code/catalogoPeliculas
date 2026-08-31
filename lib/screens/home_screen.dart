@@ -35,9 +35,14 @@ class _HomeScreenState extends State<HomeScreen> {
           return Padding(
             padding: EdgeInsets.all(5),
             child: Card(
+              elevation: 4, 
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               child: ListTile(
-                leading: Image.network(
+                leading: ClipRRect( borderRadius: BorderRadius.circular(8),
+                child: 
+                Image.network(
                   'https://image.tmdb.org/t/p/w200${movie.posterPath}',
+                ),
                 ),
                 title: Text(movie.title),
                 subtitle: Text(movie.voteAverage.toString()),

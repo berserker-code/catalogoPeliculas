@@ -27,4 +27,14 @@ factory Movie.fromJson(Map<String, dynamic> json){
     voteAverage: json['vote_average']);
 }
 
+
+Map<String, dynamic> toJson(){
+return{
+  'id': id,
+  'title': title,
+  'overview': overview,
+  'poster_path': posterPath,
+  'vote_average': voteAverage,
+};
+}
 }
