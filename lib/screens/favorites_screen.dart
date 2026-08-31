@@ -1,45 +1,42 @@
-import 'package:catalogopeliculas/models/movie.dart';
-import 'package:catalogopeliculas/screens/favorites_screen.dart';
-import 'package:catalogopeliculas/screens/movie_detail_screen.dart';
-import 'package:catalogopeliculas/services/movie_service.dart';
-import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+
+import 'package:catalogopeliculas/models/movie.dart';
+import 'package:catalogopeliculas/screens/movie_detail_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:catalogopeliculas/services/favorite_service.dart';
+
+class FavoritesScreen extends StatefulWidget{
+  const FavoritesScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<FavoritesScreen> createState() => _FavoritesScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final MovieService _movieService = MovieService();
-  List<Movie> movies = [];
+class _FavoritesScreenState extends State<FavoritesScreen>{
+  final FavoriteService _favoriteService = FavoriteService();
+  List<Movie> favorites = [];
+  
 
-  @override
-  void initState() {
-    super.initState();
-    _movieService.getPopularMovies().then((data) {
-      setState(() {
-        movies = data;
-      });
+@override
+void initState() {
+  super.initState();
+  _favoriteService.getFavorites().then((data){
+    setState(() {
+      favorites = data;
     });
-  }
+  });
+}
+  
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
 
-      appBar: AppBar(title: Text('data'),
-      actions: [
-        IconButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) =>FavoritesScreen()));
-        }, icon: Icon(Icons.favorite, color: Colors.red,))
-      ],),
-
+      appBar: AppBar(title: Text('favoritos')),
       body: ListView.builder(
-        itemCount: movies.length,
+        itemCount: favorites.length,
         itemBuilder: (context, index) {
-          final movie = movies[index];
+          final movie = favorites[index];
           return Padding(
             padding: EdgeInsets.all(5),
             child: Card(
@@ -67,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-    );
+    ); 
   }
 }
+
