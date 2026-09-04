@@ -1,4 +1,6 @@
+import 'package:catalogopeliculas/providers/movie_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/home_screen.dart'; // ajusta según el nombre real de tu pantalla
 
 void main() {
@@ -10,10 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(
+      create: (context) => MovieProvider(),
+      child: MaterialApp(
       debugShowCheckedModeBanner: false,
+
       title: 'Movie App',
       home: HomeScreen(),
+    ),
+    
     );
   }
 }
+
