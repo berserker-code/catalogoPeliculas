@@ -1,3 +1,4 @@
+import 'package:catalogopeliculas/providers/favorite_provider.dart';
 import 'package:catalogopeliculas/providers/movie_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,8 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MovieProvider(),
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => MovieProvider()),
+      ChangeNotifierProvider(create: (context) => FavoriteProvider()),
+    ],
       child: MaterialApp(
       debugShowCheckedModeBanner: false,
 

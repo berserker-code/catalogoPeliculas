@@ -1,7 +1,7 @@
 import 'package:catalogopeliculas/models/movie.dart';
-import 'package:catalogopeliculas/services/favorite_service.dart';
-
+import 'package:catalogopeliculas/providers/favorite_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   const MovieDetailScreen({super.key, required this.movie});
@@ -14,35 +14,29 @@ class MovieDetailScreen extends StatefulWidget {
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
-final FavoriteService _favoriteService = FavoriteService();
-bool isFavorite = false;
 
 @override
   void initState() {
     super.initState();
-    _favoriteService.isFavorites(widget.movie.id).then((value){
-      setState(() {
-        isFavorite = value;
-      });
-    });
-
+    context.read<FavoriteProvider>().loadFavorites();
     }
 
   @override
   Widget build(BuildContext context) {
+    final favoriteProvider = context.watch<FavoriteProvider>();
+    
     return Scaffold(
       
       appBar: AppBar(title: Text(widget.movie.title),
       actions: [
         IconButton(onPressed: (){
-          _favoriteService.toggleFavorite(widget.movie).then((_){
-            setState(() {
-              isFavorite = !isFavorite;
-            });
-          });
-        }, icon: Icon(isFavorite ? Icons.favorite: Icons.favorite_border,
-        color: isFavorite ? Colors.red : null,))
-      ],),
+            favoriteProvider.toggleFavorite(widget.movie);
+            },
+            icon: Icon(favoriteProvider.isFavorite(widget.movie.id) ? Icons.favorite: Icons.favorite_border,
+        color: favoriteProvider.isFavorite(widget.movie.id) ? Colors.red : null,),
+        ),
+      ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

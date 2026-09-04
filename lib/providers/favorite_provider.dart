@@ -8,7 +8,7 @@ class FavoriteProvider extends ChangeNotifier {
 final FavoriteService _favoriteService = FavoriteService();
 
 List<Movie> _favorites = [];
-List<Movie> get favorite => _favorites;
+List<Movie> get favorites => _favorites;
 bool _isLoading = true;
 bool get isLoading => _isLoading;
 String? _errorMessage;
@@ -30,18 +30,14 @@ Future<void> loadFavorites() async {
 }
 
 Future<void> toggleFavorite(Movie movie) async {  
-    _favoriteService.toggleFavorite(movie).then((data){
-    _favorites = data;
-    _isLoading = false;
-    notifyListeners();
-  }).catchError((error){
-    _errorMessage = 'no se cargaron las peliculas favoritas';
-    _isLoading = false;
-    notifyListeners();
-  });
+await _favoriteService.toggleFavorite(movie);
+await loadFavorites();
 
 }
 
+bool isFavorite(int id){
+  return _favorites.any((movie) => movie.id == id);
+}
 
 
 

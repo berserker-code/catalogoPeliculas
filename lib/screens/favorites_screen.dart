@@ -1,9 +1,9 @@
 
 
-import 'package:catalogopeliculas/models/movie.dart';
+import 'package:catalogopeliculas/providers/favorite_provider.dart';
 import 'package:catalogopeliculas/screens/movie_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:catalogopeliculas/services/favorite_service.dart';
+import 'package:provider/provider.dart';
 
 class FavoritesScreen extends StatefulWidget{
   const FavoritesScreen({super.key});
@@ -13,30 +13,26 @@ class FavoritesScreen extends StatefulWidget{
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen>{
-  final FavoriteService _favoriteService = FavoriteService();
-  List<Movie> favorites = [];
   
 
 @override
 void initState() {
   super.initState();
-  _favoriteService.getFavorites().then((data){
-    setState(() {
-      favorites = data;
-    });
-  });
+  context.read<FavoriteProvider>().loadFavorites();
 }
   
 
   @override
   Widget build(BuildContext context) {
+
+    final favoriteProvider = context.watch<FavoriteProvider>();
     return  Scaffold(
 
       appBar: AppBar(title: Text('favoritos')),
       body: ListView.builder(
-        itemCount: favorites.length,
+        itemCount: favoriteProvider.favorites.length,
         itemBuilder: (context, index) {
-          final movie = favorites[index];
+          final movie = favoriteProvider.favorites[index];
           return Padding(
             padding: EdgeInsets.all(5),
             child: Card(
