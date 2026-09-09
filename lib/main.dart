@@ -2,7 +2,7 @@ import 'package:catalogopeliculas/providers/favorite_provider.dart';
 import 'package:catalogopeliculas/providers/movie_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/home_screen.dart'; // ajusta según el nombre real de tu pantalla
+import 'screens/home_screen.dart'; 
 
 void main() {
   runApp(const MyApp());

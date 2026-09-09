@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:catalogopeliculas/providers/movie_provider.dart';
 import 'package:catalogopeliculas/screens/favorites_screen.dart';
 import 'package:catalogopeliculas/screens/movie_detail_screen.dart';
